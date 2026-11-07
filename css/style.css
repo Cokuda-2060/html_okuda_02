@@ -1,0 +1,601 @@
+body {
+  text-align: center; /* 画面全体の文字を中央揃えにする */
+  font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+}
+
+/* --- ナビゲーションバー全体設定 --- */
+nav {
+  width: 100%; /* 横幅を画面いっぱいに広げる */
+  background-color: #ffffff; /* ナビバーの背景色を白にする */
+  position: fixed; /* 画面最上部に固定する */
+  top: 0; /* 上端の位置を0にする */
+  left: 0; /* 左端の位置を0にする */
+  z-index: 1000; /* 他の画像やテキストより前面に表示する */
+  opacity: 0.9;
+  box-shadow: 0 2px 10px rgba(0, 2, 0, 0.1); /* ★追加: 下方向にほんのり自然な影をつける（X軸:0, Y軸:2px, ぼかし:10px, 黒の透明度10%） */
+}
+
+.navitem {
+  display: flex; /* ロゴとメニューを横並びにする */
+  justify-content: space-between; /* ロゴを左端、メニューを右端に配置する */
+  align-items: center; /* 中の要素（ロゴやメニュー）を垂直方向の中央に揃える */
+  padding: 0px 20px; /* ナビバーの上下に0px、左右に20pxの余白をつける */
+}
+
+.logo {
+  display: block; /* 画像下の不要な隙間を消すためにブロック要素化する */
+  height: 80px; /* 【基準】ロゴの高さを80pxに固定する */
+  margin: 10px 0; /* ★追加: ナビバー上下の隙間（10pxずつ）をロゴ側に持たせて高さを維持する */
+}
+
+/* --- メニューリスト設定 --- */
+.navul {
+  display: flex; /* メニュー項目を横並びにする */
+  list-style: none; /* リストの黒丸（・）を消す */
+  margin: 0; /* ブラウザ標準の外側余白をリセットする */
+  padding: 0; /* ブラウザ標準の内側余白をリセットする */
+  align-self: stretch; /* ★追加: ナビバーの高さ（ロゴ80px ＋ 上下余白20px ＝ 100px）いっぱいに高さを伸ばす */
+}
+
+.navli {
+  display: flex; /* 中のaタグの高さを満たすためflex化する */
+  height: 100%; /* 親（.navul）と同じ高さを維持する */
+}
+
+/* --- リンク（メニューボタン）設定 --- */
+.menue {
+  display: flex; /* テキストを上下中央寄せにするためflex指定する */
+  align-items: center; /* メニュー文字を垂直方向の中央に配置する */
+  height: 100%; /* ナビバーの高さ一杯（80px）までエリアを広げる */
+  padding: 0 30px; /* 左右に30pxの余白をつけてクリックエリアを広げる */
+  color: #222222; /* 文字色をダークグレーにする */
+  text-decoration: none; /* リンクの下線を消す */
+  font-size: 15px; /* フォントサイズを15pxにする */
+  transition: background-color 0.3s; /* 背景色の変化を0.3秒かけて滑らかにする */
+}
+
+/* マウスを乗せたとき（ホバー時） */
+.menue:hover {
+  background-color: #ffd61a; /* ホバー時の背景色を黄色にする */
+}
+
+/* クリックした瞬間（アクティブ時） */
+.menue:active {
+  background-color: #e6be00; /* ホバー時（#ffd61a）より少し濃い黄色にして押し込み感を出す */
+}
+
+/* --- ハンバーガーメニュー設定 --- */
+.burger {
+  display: none; /* PC画面ではハンバーガーボタンを非表示にする */
+  cursor: pointer; /* マウスカーソルを指マークにする */
+  flex-direction: column; /* 3本線を縦並びにする */
+  gap: 5px; /* 3本線の間隔を5pxにする */;
+  padding-right: 10px;
+}
+
+.burger span {
+  width: 25px; /* 線の長さを25pxにする */
+  height: 3px; /* 線の太さを3pxにする */
+  background-color: #333; /* 線の色をダークグレーにする */
+  display: block; /* 1本ずつの線をブロック要素にする */
+}
+
+/* --- レスポンシブ設定（画面幅1200px以下） --- */
+@media (max-width: 1200px) {
+  .navul {
+    display: none; /* 画面幅が狭くなったら通常メニューを隠す */
+  }
+
+  .burger {
+    display: flex; /* 画面幅が狭くなったらハンバーガーボタンを表示する */
+  }
+  
+  /* 画像と文字を囲む親要素を相対位置（基準）にする */
+  .tokucho1,
+  .tokucho2,
+  .tokucho3 { 
+    position: relative;
+    width: 100%; 
+    display: flex !important;           /* 強制的にflexを適用 */
+    flex-direction: column !important;  /* 横並び・リバースを強制解除 */
+  }
+
+    /* リバース（左右反転）を解除して上から下への並びに揃える */
+  .tokucho2 {
+    flex-direction: column; /* または row-reverse を解除 */
+  }
+
+  /* 画像を枠いっぱいに広げる */
+  .tokucho1 img,
+  .tokucho2 img,
+  .tokucho3 img {
+    width: 100% !important;  /* ★PC版の50%指定を強制上書き */
+    height: auto;
+    display: block;
+  }
+
+  /* テキストエリアを画像の上に絶対配置して重ねる */
+  .tokucho1 > div,
+  .tokucho2 > div,
+  .tokucho3 > div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;  /* ★PC版の50%指定を強制上書き */
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5) !important; /* PC版の背景色を強制上書き */
+    
+    /* 上下左右の中央寄せ */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+
+    /* 写真の上に重ねる半透明の黒背景（文字を見やすくするため） */
+    background-color: rgba(0, 0, 0, 0.5); 
+    text-align: center;
+  }
+
+  /* 重ねたテキスト内の見出しと文章の文字色を白にする */
+  .tokucho1 h4, .tokucho1 p,
+  .tokucho2 h4, .tokucho2 p,
+  .tokucho3 h4, .tokucho3 p {
+    color: #ffffff;
+  }
+
+
+  /* 親枠：画面からはみ出た部分を完全にカット */
+  .aboutimg {
+    display: flex !important;
+    width: max-content !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    /* ★ 60s 〜 80s 程度まで伸ばすとかなりゆったり流れます */
+    animation: loop-sp 360s linear infinite !important; 
+  }
+
+  /* 子要素（liなどがある場合も考慮して隙間をリセット） */
+  .aboutimg li,
+  .aboutimg div {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100vw !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* 画像自体：ピッタリ画面幅1枚分にする */
+  .aboutimg img {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+}
+
+/* --- レスポンシブ用アニメーション（@mediaの外に記述） --- */
+@keyframes loop-sp {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* 画像4枚分（100vw × 4）スライドしたら一瞬で0に戻る */
+    transform: translateX(-400vw);
+  }
+  
+}
+
+#About,
+#Course,
+#News,
+#Access,
+#Contact {
+    scroll-margin-top: 100px; /* ★ナビバーの高さ（100px）分だけ手前でスクロールをストップさせる */
+}
+
+/* --- メインビジュアル設定 --- */
+.topimg {
+  position: relative; /* 子要素（.toptext）の絶対配置の基準（親）にする */
+  margin-top: 100px; /* ナビバーの高さ（ロゴ80px ＋ 上下余白20px ＝ 100px）分下に押し下げる */
+}
+
+.topimg img {
+  display: block; /* 画像の下にできる数ピクセルの隙間を消す */
+  width: 100%; /* 画像の幅を画面一杯にする */
+
+  /* ★下側を円弧状（楕円）に切り抜く指定 */
+  clip-path: ellipse(70% 100% at 50% 0%);
+}
+
+.toptext {
+  color: white; /* 文字色を白にする */
+  position: absolute; /* 親要素（.topimg）を基準にして絶対配置する */
+  top: 50%; /* 上から50%の位置に配置する */
+  left: 50%; /* 左から50%の位置に配置する */
+  transform: translate(-50%, -50%); /* 要素自身のサイズの半分だけ引き戻して完全中央寄せにする */
+  text-align: center; /* テキストを中央揃えにする */
+  width: 100%; /* 横幅を100%にして折り返し時の中央軸を安定させる */
+}
+
+.toptext1 {
+  font-weight: bold; /* 太字にする */
+  font-size: clamp(20px, 4vw, 48px); /* 画面幅に合わせて可変にする */
+  text-shadow: 0 2px 10px #4d2f2f;
+}
+
+.toptext2 {
+  font-size: clamp(18px, 4vw, 24px); /* 画面幅に合わせて可変にする */
+  margin: 0; /* ブラウザ標準の余白（特にmargin-bottom）をリセットする */
+  margin-top: 30px; /* h1との間隔を30pxあける */
+  text-shadow: 0 2px 10px #4d2f2f;
+}
+
+section{
+    padding-top: 40px;
+
+}
+
+.sectioncontena{
+    padding: 0px 20px;
+}
+
+h3{
+    font-size: 24px;
+    margin: 60px auto 30px auto;
+    font-weight: bold;
+}
+
+h4{
+    font-size: 18Px;
+}
+
+.newskana{
+    padding-bottom: 40PX;
+}
+
+p{
+    font-size: 16px;
+}
+
+.yellow{
+    color: #ffd61a;
+}
+
+#About h4{
+    margin-bottom: 60px;
+}
+
+#About p{
+    line-height: 2;
+    margin-bottom: 40px;
+}
+
+/* 一番最後の<p>だけは画像との間隔に任せるため下余白を消す */
+#About p:last-of-type {
+  margin-bottom: 80px; /* 画像エリア（aboutimg）との間の余白 */
+}
+
+.aboutimg{
+    display: flex;
+    overflow: hidden; /* はみ出た画像を隠す */
+    width: 100%;
+    
+}
+
+/* 4枚の画像を横に広げて自動で動かす */
+.aboutimg img {
+  width: 25%; /* 画面内に常に1枚（または調整）表示 */
+  flex-shrink: 0;
+  height: auto;
+  object-fit: cover;
+  
+  /* アニメーションの概要：15秒かけて左へ永久に滑らかに流す設定 */
+  animation: slideAnimation 10s linear infinite;
+}
+
+/* 横に流すアニメーションの動き定義 */
+@keyframes slideAnimation {
+  /* スタート地点（最初の位置） */
+    0% {
+    transform: translateX(0);
+  }
+  /* ゴール地点（1セット分（4枚＝100%）を左へ押し切った位置） */
+  100% {
+    transform: translateX(-100%); /* 左へ流しきる */
+  }
+}
+
+.tokucho1,
+.tokucho2,
+.tokucho3 {
+  display: flex; /* 横並び（1文字目〜3文字目で共通化） */
+  width: 100%; /* 横幅いっぱいに広げる */
+}
+
+/* 2番目だけ左右反転 */
+.tokucho2 {
+  flex-direction: row-reverse;
+}
+
+/* --- 各ブロック内の「画像」の調整 --- */
+.tokucho1 > img,
+.tokucho2 > img,
+.tokucho3 > img {
+  width: 50%; /* 親の半分の幅にする */
+  height: auto; /* 高さを自動調整 */
+  object-fit: cover; /* 画像が歪むのを防いで綺麗にトリミングする */
+  display: block; /* 画像下の不要な隙間を消す */
+}
+
+/* --- 各ブロック内の「文章エリア」の調整 --- */
+.tokucho1 > div,
+.tokucho2 > div,
+.tokucho3 > div {
+  width: 50%; /* 親の半分の幅にする */
+  display: flex; /* 上下中央寄せ用のflex */
+  flex-direction: column; /* 縦並びにする */
+  justify-content: center; /* 枠の上下中央にコンテンツを配置 */
+  align-items: center; /* ★追加：480pxの文章エリア自体を左右の中央に配置する */
+  padding: 120px 50px; /* ★変更：上下120px、左右50pxの余白 */
+  box-sizing: border-box; /* パディングを含めて幅50%に収める */
+  background-color: #fafafa;
+}
+
+/* --- テキストコンテンツ全体の幅制限 --- */
+.tokucho1 h4, 
+.tokucho2 h4, 
+.tokucho3 h4,
+.tokucho1 p, 
+.tokucho2 p, 
+.tokucho3 p {
+  width: 100%;
+  max-width: 480px; /* ★追加：文章の最大横幅を480pxに制限 */
+}
+
+/* 見出しと本文の微調整 */
+.tokucho1 h4,
+.tokucho2 h4,
+.tokucho3 h4 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  text-align: left; /* テキスト自体は左揃え */
+}
+
+.tokucho1 p,
+.tokucho2 p,
+.tokucho3 p {
+  font-size: 15px;
+  line-height: 1.8;
+  text-align: left; /* テキスト自体は左揃え */
+}
+
+#Course p{
+    line-height: 2;
+    margin-bottom: 40px;
+}
+
+.newsbox{
+    display: flex;
+    flex-wrap: wrap;        /* ★3つ並んだら自動で次の段に折り返す */
+    justify-content: center;
+    max-width: 1000px;
+    gap: 60px 30px;
+    margin: 30px auto;
+
+    /* ＜計算式＞
+    3個置く： 300px + 30px + 300px + 30px + 300px = 930px → 最大幅1000px超えない
+    4個置く： 930px + 30px + 300px = 1260px ➔ 最大幅超える */
+}
+
+.newsbox > div{
+    width: 300px;
+}
+
+.newsdate{
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.newstext,
+.newsdate{
+    text-align: left;
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.more input{
+    border: none; /* ★これを入れてブラウザ標準の立体枠線を消します */
+    display: inline-block;
+    width: 240px;           /* ボタンの横幅 */
+    padding: 16px 0;        /* ボタンの上下の厚み */
+    background-color: #ffd61a; /* ボタンの背景色（お好みで変更可） */
+    color: #333;            /* 文字色（白） */
+    font-size: 18px;        /* 文字サイズ */
+    font-weight: bold;     /* 太字 */
+    border-radius: 4px;     /* 角を少し丸くする */
+    cursor: pointer;        /* マウスを乗せたときに指マークにする */
+    transition: opacity 0.3s; /* ホバー時のアニメーション設定 */
+    margin: 60px;
+}
+
+/* マウスを乗せたときの変化（ホバー効果） */
+.more input:hover {
+    opacity: 0.8; /* 少し透明にして「押せる」感を出す */
+    color: #fff;            /* ★文字色を白にする */
+}
+
+#Access{
+    background-color: #fafafa;
+    padding-bottom: 30px;
+}
+
+#Access h4{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    margin-top: 30px;
+}
+
+.map{
+    width: 100%;
+    height: 500px;
+    margin: 30px 0 30px 0;
+    border: none;
+}
+
+.info{
+    display: flex;
+    flex-wrap: wrap; /* 項目ごとに改行させる */
+    max-width: 540px; /* リスト全体の横幅 */
+    margin: 0 auto; /* 中央寄せ */
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+/* 項目名（左側） */
+.info dt {
+  width: 160px; /* 左側見出しの固定幅 */
+  font-weight: normal; /* 太字を解除 */
+  padding-bottom: 24px; /* 行間のすきま */
+  box-sizing: border-box; /* ほんとはcssの最初に書いておくのが良き。ブロックの外膨れを防ぐ */
+  text-align: right;
+  padding-right: 50px;
+}
+
+/* 内容（右側） */
+.info dd {
+  width: calc(100% - 160px); /* 全体幅からdt(160px)を引いた残り幅 */
+  margin: 0; /* ブラウザ標準の余白をリセット */
+  padding-bottom: 24px; /* 行間のすきま */
+  box-sizing: border-box; /* ほんとはcssの最初に書いておくのが良き。ブロックの外膨れを防ぐ */
+  text-align: left;
+}
+
+#Contact h4{
+    margin-bottom: 60px;
+}
+
+#Contact p{
+    line-height: 2;
+    margin-bottom: 50px;
+}
+
+/* フォーム全体の幅指定と中央寄せ */
+.contact-form {
+  max-width: 600px;          /* 画像のようなスッキリした幅に設定 */
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* 各入力行の配置指定（縦並び） */
+.form-item {
+  display: flex;
+  flex-direction: column;    /* ★横並びから縦一列の配置に切り替え */
+  align-items: flex-start;   /* ラベルや入力枠を左揃えにする */
+  margin-bottom: 24px;       /* 項目同士の上下間隔 */
+}
+
+/* ラベル（項目名）のスタイル */
+.form-item > label {
+  width: 100%;               /* 固定幅(320px)を解除して横いっぱいに広げる */
+  font-size: 18px;
+  font-weight: bold;
+  color: #111;
+  text-align: left;
+  margin-bottom: 8px;        /* 入力枠との間のすきま */
+}
+
+/* 各入力枠（テキスト枠・メール枠・テキストエリア） */
+.name,
+.kana,
+.email,
+.reason,
+.detail {
+  width: 100%;               /* 枠を横いっぱいに広げる */
+  padding: 12px 14px;        /* 内側の余白 */
+  font-size: 16px;
+  border: 1px solid #767676; /* 角が少し丸い細い灰色の枠線 */
+  border-radius: 6px;        /* 枠の角を丸くする */
+  box-sizing: border-box;
+  background-color: #fff;
+  color: #333;
+}
+
+
+
+/* 4. チェックボックスリストの余白・文字揃えのリセット（★重要） */
+.checkbox {
+    padding-left: 0;
+    margin: 0;
+    text-align: left; /* チェックボックスの文字を左揃えにする */
+}
+
+.checkbox li {
+  margin-bottom: 8px;
+}
+
+.checkbox input[type="checkbox"] {
+  transform: scale(1.5); /* 1.5倍（2倍にしたければ 2 に変更） */
+  margin-right: 8px;     /* 大きくした分、右側の文字とのすきまを少し開ける */
+  cursor: pointer;       /* マウスカーソルを指マークにする */
+}
+
+
+.submit input{
+    border: none; /* ★これを入れてブラウザ標準の立体枠線を消します */
+    display: inline-block;
+    width: 240px;           /* ボタンの横幅 */
+    padding: 16px 0;        /* ボタンの上下の厚み */
+    background-color: #ffd61a; /* ボタンの背景色（お好みで変更可） */
+    color: #333;            /* 文字色（白） */
+    font-size: 18px;        /* 文字サイズ */
+    font-weight: bold;     /* 太字 */
+    border-radius: 4px;     /* 角を少し丸くする */
+    cursor: pointer;        /* マウスを乗せたときに指マークにする */
+    transition: opacity 0.3s; /* ホバー時のアニメーション設定 */
+    margin: 60px;
+}
+
+/* マウスを乗せたときの変化（ホバー効果） */
+.submit input:hover {
+    opacity: 0.8; /* 少し透明にして「押せる」感を出す */
+    color: #fff;            /* ★文字色を白にする */
+}
+
+/* トップへ戻るボタンの固定スタイル */
+.pagetop {
+  position: fixed;
+  right: 50px;            /* 画面右端から20pxの位置 */
+  bottom: 50px;           /* 画面下端から20pxの位置 */
+  z-index: 999;           /* 他のコンテンツより手前に表示 */
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;            /* ボタンの横幅 */
+  height: 80px;           /* ボタンの高さ */
+  
+  background-color: #ffd61a; /* チーズアカデミーのテーマカラー（黄色） */
+  color: #333;            /* 文字色 */
+  font-weight: bold;
+  text-decoration: none;  /* 下線を消す */
+  border-radius: 100%;     /* まんまるにする（四角が良ければ 4px などに変更） */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* 浮き出て見える影 */
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+/* ホバー時の効果 */
+.pagetop:hover {
+  opacity: 0.8;
+  transform: translateY(-10px); /* 少し上に浮くアニメーション */
+  color: #d8730e;
+}
